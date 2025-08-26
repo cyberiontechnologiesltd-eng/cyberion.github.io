@@ -277,9 +277,29 @@
         status: "pending"
       })
       .then(() => {
-        alert("✅ Your deletion request has been submitted successfully. You will receive a confirmation email shortly.");
+        alert("✅ Your deletion request has been submitted successfully. Your Account will be permanently deleted in 30 days.");
         deleteBtn.textContent = 'Request Submitted';
         deleteBtn.disabled = true;
+        
+        // Sign out the user after successful submission
+        setTimeout(() => {
+          auth.signOut().then(() => {
+            // Reset the UI back to login state
+            document.getElementById("request-section").style.display = "none";
+            document.getElementById("login-section").style.display = "block";
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            
+            // Reset login button
+            const loginBtn = document.querySelector('.login-btn');
+            loginBtn.classList.remove('loading');
+            loginBtn.textContent = 'Sign In';
+            
+            alert("You have been signed out for security purposes.");
+          }).catch(err => {
+            console.error("Sign out error:", err);
+          });
+        }, 2000); // Wait 2 seconds before signing out
       })
       .catch(err => {
         alert("Error: " + err.message);
