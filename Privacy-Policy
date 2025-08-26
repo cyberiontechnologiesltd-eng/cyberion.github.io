@@ -1,0 +1,73 @@
+Privacy Policy for Staffy (EMS App)
+
+Effective Date: 26/08/2025
+
+Staffy (“we,” “our,” or “us”) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard information when you use our mobile and web applications (the “App”).
+
+1. Information We Collect
+
+When you use Staffy, we may collect the following information:
+
+Account Information: such as your name, email address, company ID, and role.
+
+Employment Data: such as schedules, training records, and roster details, depending on your organization’s use of the app.
+
+Authentication Data: we use Firebase Authentication to manage user logins securely.
+
+Usage Data: basic logs of how the app is used, for debugging and improving performance.
+
+We do not collect sensitive personal data (e.g., financial or biometric data) unless explicitly provided by your organization.
+
+2. How We Use Information
+
+We use your information to:
+
+Provide access to your company’s EMS system.
+
+Allow administrators to manage rosters, permissions, and training.
+
+Improve and secure the app.
+
+Respond to support requests.
+
+3. Information Sharing
+
+We do not sell or rent your information. Your data may be shared only:
+
+With your organization’s administrators, to manage employment-related functions.
+
+With trusted service providers (such as Firebase/Google Cloud), who help us run the app.
+
+If required by law or to protect the safety and rights of users.
+
+4. Data Storage & Security
+
+We use Firebase (Google Cloud) for authentication and data storage.
+
+Data is encrypted in transit (HTTPS/TLS).
+
+Access to data is controlled through Firestore Security Rules and organizational permissions.
+
+5. Account Deletion
+
+You can request account deletion by:
+
+Contacting your organization’s administrator, or
+
+Submitting a request through our Account Deletion Request Page
+.
+
+Once confirmed, your account and associated data will be removed in accordance with organizational policies.
+
+6. Children’s Privacy
+
+Staffy is not directed toward children under 13. If we discover that a child under 13 has registered, we will promptly delete their data.
+
+7. Changes to this Policy
+
+We may update this Privacy Policy from time to time. Changes will be reflected with a new “Effective Date” above.
+
+8. Contact Us
+
+If you have questions or concerns about this Privacy Policy, please contact us at:
+📧 cyberiontechnologiesltd@gmail.com
