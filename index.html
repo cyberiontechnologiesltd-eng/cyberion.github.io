@@ -7,55 +7,269 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      max-width: 450px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .form-section {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      border: 2px solid #e1e5e9;
+      border-radius: 12px;
+      font-size: 16px;
+      background: #fff;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #667eea;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+    }
+
+    input::placeholder {
+      color: #999;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .delete-btn {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+      color: white;
+      margin-top: 20px;
+    }
+
+    .delete-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    #user-info {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      color: #495057;
+      font-weight: 500;
+      border-left: 4px solid #28a745;
+    }
+
+    .warning-box {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 20px;
+      color: #856404;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .warning-box strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #e17055;
+    }
+
+    .icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #667eea;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+        margin: 10px;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Loading animation */
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid #fff;
+      border-top: 2px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
-  <h2>Request Account Deletion</h2>
-  <p>Sign in to confirm your identity, then click request.</p>
-
-  <div id="login-section">
-    <input type="email" id="email" placeholder="Email"><br>
-    <input type="password" id="password" placeholder="Password"><br>
-    <button onclick="login()">Login</button>
-  </div>
-
-  <div id="request-section" style="display:none;">
-    <p id="user-info"></p>
-    <button onclick="requestDeletion()">Request Account Deletion</button>
+  <div class="container">
+    <div class="icon">🔐</div>
+    <h2>Account Deletion</h2>
+    <p class="subtitle">Sign in to verify your identity before requesting account deletion</p>
+    
+    <div id="login-section">
+      <div class="form-section">
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button class="login-btn" onclick="login()">Sign In</button>
+      </div>
+    </div>
+    
+    <div id="request-section" style="display:none;">
+      <p id="user-info"></p>
+      
+      <div class="warning-box">
+        <strong>⚠️ Warning</strong>
+        This action cannot be undone. All your data will be permanently deleted from our servers.
+      </div>
+      
+      <button class="delete-btn" onclick="requestDeletion()">Request Account Deletion</button>
+    </div>
   </div>
 
   <script>
     const firebaseConfig = {
-    apiKey: "AIzaSyBp9jnvIO2STzU0pE05Fnw2hfB-Qqw8NgA",
-    authDomain: "staffy-69349.firebaseapp.com",
-    projectId: "staffy-69349",
-    storageBucket: "staffy-69349.firebasestorage.app",
-    messagingSenderId: "811762363307",
-    appId: "1:811762363307:web:4f8f1595766d13d16000ee",
-    measurementId: "G-EMNNB2ZL0X"
-  };
-
+      apiKey: "AIzaSyBp9jnvIO2STzU0pE05Fnw2hfB-Qqw8NgA",
+      authDomain: "staffy-69349.firebaseapp.com",
+      projectId: "staffy-69349",
+      storageBucket: "staffy-69349.firebasestorage.app",
+      messagingSenderId: "811762363307",
+      appId: "1:811762363307:web:4f8f1595766d13d16000ee",
+      measurementId: "G-EMNNB2ZL0X"
+    };
+    
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
-
+    
     function login() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
+      const loginBtn = document.querySelector('.login-btn');
+      
+      if (!email || !password) {
+        alert("Please fill in both email and password");
+        return;
+      }
+      
+      // Add loading state
+      loginBtn.classList.add('loading');
+      loginBtn.textContent = 'Signing In...';
+      
       auth.signInWithEmailAndPassword(email, password)
         .then(userCredential => {
           document.getElementById("login-section").style.display = "none";
           document.getElementById("request-section").style.display = "block";
-          document.getElementById("user-info").innerText =
-            "Signed in as: " + userCredential.user.email;
+          document.getElementById("user-info").innerHTML = 
+            `<strong>✅ Signed in as:</strong><br>${userCredential.user.email}`;
         })
-        .catch(err => alert("Login failed: " + err.message));
+        .catch(err => {
+          alert("Login failed: " + err.message);
+          loginBtn.classList.remove('loading');
+          loginBtn.textContent = 'Sign In';
+        });
     }
-
+    
     function requestDeletion() {
       const user = auth.currentUser;
       if (!user) return alert("Not signed in");
-
+      
+      const deleteBtn = document.querySelector('.delete-btn');
+      
+      // Confirmation dialog
+      if (!confirm("Are you absolutely sure you want to delete your account? This action cannot be undone.")) {
+        return;
+      }
+      
+      // Add loading state
+      deleteBtn.classList.add('loading');
+      deleteBtn.textContent = 'Processing...';
+      
       db.collection("delete_requests").doc(user.uid).set({
         uid: user.uid,
         email: user.email,
@@ -63,11 +277,23 @@
         status: "pending"
       })
       .then(() => {
-        alert("✅ Your deletion request has been submitted.");
+        alert("✅ Your deletion request has been submitted successfully. You will receive a confirmation email shortly.");
+        deleteBtn.textContent = 'Request Submitted';
+        deleteBtn.disabled = true;
       })
-      .catch(err => alert("Error: " + err.message));
+      .catch(err => {
+        alert("Error: " + err.message);
+        deleteBtn.classList.remove('loading');
+        deleteBtn.textContent = 'Request Account Deletion';
+      });
     }
+    
+    // Allow Enter key to trigger login
+    document.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && document.getElementById('login-section').style.display !== 'none') {
+        login();
+      }
+    });
   </script>
 </body>
 </html>
-
