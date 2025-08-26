@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Account Deletion Request</title>
+  <!-- Firebase compat SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -23,12 +24,18 @@
   </div>
 
   <script>
-    // TODO: Replace with your Firebase config
+    // 🔹 Your Firebase project config (replace with your actual one)
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
+      apiKey: "AIzaSyBp9jnvIO2STzU0pE05Fnw2hfB-Qqw8NgA",
+      authDomain: "staffy-69349.firebaseapp.com",
+      projectId: "staffy-69349",
+      storageBucket: "staffy-69349.appspot.com",
+      messagingSenderId: "811762363307",
+      appId: "1:811762363307:web:4f8f1595766d13d16000ee",
+      measurementId: "G-EMNNB2ZL0X"
     };
+
+    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
@@ -57,7 +64,7 @@
         status: "pending"
       })
       .then(() => {
-        alert("Your deletion request has been submitted.");
+        alert("✅ Your deletion request has been submitted.");
       })
       .catch(err => alert("Error: " + err.message));
     }
